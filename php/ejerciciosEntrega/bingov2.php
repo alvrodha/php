@@ -8,11 +8,10 @@ function generarTabla($numFilas, $numColumnas) {
     for ($filaActual = 0; $filaActual < $numFilas; $filaActual++) {
         $numCeldasVacias = 0;
         $numCeldasRellenas = 0;
-        
+
         echo "<tr>";
         for ($columnaActual = 0; $columnaActual < $numColumnas; $columnaActual++) {
-            $numeroAGenerar = obtenerNum($filaActual, $columnaActual);
-            echo "<td id = ".obtenerCelda($columnaActual, $numCeldasVacias, $numCeldasRellenas).">$numeroAGenerar</td>";
+            echo "<td id = ".obtenerCelda($columnaActual, $numCeldasVacias, $numCeldasRellenas).">".$numeroAGenerar = obtenerNum($filaActual, $columnaActual)."</td>";
         }
         echo "</tr>";
     }
@@ -48,15 +47,15 @@ function obtenerCelda($columnaActual, $numVacias, $numRellenas) {
 function obtenerNum($columnaActual, $filaActual){
     $numero = 0;
     $unidades = 0;
-    if ($filaActual = 1) {
+    if ($columnaActual = 1) {
         $unidades = random_int(0, 4);
-        $numero = 10* $columnaActual + $unidades;
-    } else if ($filaActual = 2) {
+        $numero = 10* $filaActual + $unidades;
+    } else if ($columnaActual = 2) {
         $unidades = random_int(4, 7);
-        $numero = 10* $columnaActual + $unidades;
+        $numero = 10* $filaActual + $unidades;
     }   else {
-        $unidades = random_int(7, 9);
-        $numero = 10* $columnaActual + $unidades;
+        $unidades = random_int(7, 10);
+        $numero = 10* $filaActual + $unidades;
     }
     return $numero;
 }
@@ -100,7 +99,6 @@ function obtenerNum($columnaActual, $filaActual){
             border: 2px solid rgb(120, 120, 180);
             background-color: rgb(170, 170, 205);
         }
-       
     </style>
 </head>
 <body>
