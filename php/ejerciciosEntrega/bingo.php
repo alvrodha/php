@@ -6,13 +6,18 @@ function generarTabla() {
     $numColumnas = 9;
 
     echo "<table>";
+    $columUnValor = 0;
+    $columDosValor = 0;
     for ($numFilasAct = 0; $numFilasAct < $numFilas; $numFilasAct++) {
         echo "<tr>";
+        
+
         for ($numColumnasAct = 0; $numColumnasAct < $numColumnas; $numColumnasAct++) {
-            $contenido = obtenerContenido();
+            $contenido = obtenerContenido($columUnValor, $columDosValor);
             echo '<td id="'.$contenido.'">';
+
             if ($contenido == "rellena") {
-                $num = obtenerNum();
+                $num = obtenerNum($numFilasAct, $numColumnasAct);
                 echo '<div id="numerito">'.$num.'</div>'.$num.'</td>';
             }   else {
                 echo "</td>";
@@ -24,24 +29,21 @@ function generarTabla() {
     echo "</table>";
 }
 
-function obtenerNum(){
+function obtenerNum($filasActual, $columnasAct){
     $numObtenido = 10;
+
+    if ($filasActual == 0) {
+        $numObtenido = $columnasAct * 10 + random_int(0,7);
+    } else if ($filasActual == 1) {
+
+    }
 
     return $numObtenido;
 } 
 
-function obtenerContenido() {
-    $contRellena = 0;
-    $contVacia = 0;
-    $mensage = "";
-    $numAleatorio = random_int(1,2);
-    if ($numAleatorio == 2 && $contRellena < 5) {
-        $mensage = "rellena";
-        $contRellena++;
-    }   else {
-        $mensage = "vacia";
-        $contVacia++;
-    }
+function obtenerContenido($columUnValor, $columDosValor) {
+    $mensage = "rellena";
+
     return $mensage;
 }
 
