@@ -6,10 +6,6 @@
     <title>EJ3-04</title>
 </head>
 <body>
-
-
-    <hr>
-    <?php echo show_source(__FILE__); ?>
-    <hr>
+    
 </body>
 </html>
