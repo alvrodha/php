@@ -18,7 +18,7 @@
     define ('PAPEL2',   "&#x1F91A;" );
 
     function generarManos() {
-        $randomNum = random_int(0,2);
+        $randomNum = random_int(1,3);
 
     }
 

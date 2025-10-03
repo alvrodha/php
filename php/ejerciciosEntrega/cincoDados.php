@@ -26,11 +26,12 @@ $tcharDados = [
  */
 function generarDados(int $numdados): array
 {
-  $valores = [];
+  $valores =[];
   for ($i = 0; $i < $numdados; $i++) {
-    $valores[] = random_int(0, 6);
+    $valores[] = random_int(1, 6);
   }
   return $valores;
+  
 }
 
 /**
@@ -39,22 +40,15 @@ function generarDados(int $numdados): array
  * @param array $tdados
  * @return int
  */
-function calcularPuntos( array $tdados): int
+function calcularPuntos(array $tdados): int
 {
-/*    
     $suma = 0;
-    sort($tdados);
-    for ($i = 1; $i < count($tdados) - 2; $i++) {
-        $suma += $tdados[$i];
+    foreach ($tdados as $valor) {
+      $suma += $valor;
     }
-
-    sort($tdados);
-    array_shift($tdados);   Quito el primero
-    array_pop($tdados);     Quito el ultimo
-    $sum = array_sum($tdados);
-*/
-   return array_sum($tdados) - min($tdados) - max($tdados);
+    return $suma;
 }
+
 
 /**
  * Gemera um mensaje indicando el jugador ganador o si ha habido empate
@@ -64,22 +58,16 @@ function calcularPuntos( array $tdados): int
  */
 function generarMensajeGanador(int $puntos1, int $puntos2): string
 {
-    $diferencia = $puntos1 - $puntos2;
-    $mensage = "Sin Resolver";
-
-    switch ($diferencia) {
-        case 1: $diferencia < 0; 
-        $mensage = "Gana el jugador 1";
-        break;
-        case 2: $diferencia = 0; 
-        $mensage = "Empate";
-        break;
-        case 3: $diferencia = 0; 
-        $mensage = "Gana el jugador 2";
-        break;
-    }
-  
-  return $mensage;
+  $mensaje = "";
+  if ($puntos1 == $puntos2) {
+    $mensaje = "EMPATE";
+  }
+  else if ($puntos1 > $puntos2) {
+    $mensaje = "GANA EL JUGADOR 1";
+  } else {
+    $mensaje = "GANA EL JUGADOR 2";
+  }
+  return $mensaje;
 }
 
 // Función que genera un mensaje para múltiples ganadores
@@ -94,7 +82,7 @@ function generarImagenes( array $tdados): string
   $msg = "";
   global $tcharDados;
   foreach ($tdados as $valordado) {
-    $msg.="<span style ='font-size:100px;'>".$tcharDados[$valordado]."</span>";
+   $msg .= "<span style='font-size:100px;'>" . $tcharDados[$valordado] . "</span>";
   }
   return $msg;
 }

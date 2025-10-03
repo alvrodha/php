@@ -4,10 +4,12 @@ function generarTabla() {
     $contenido = "";
     $numFilas = 3;
     $numColumnas = 9;
-
-    echo "<table>";
     $columUnValor = 0;
     $columDosValor = 0;
+    $numAntiguo = [];
+
+    echo "<table>";
+    
     for ($numFilasAct = 0; $numFilasAct < $numFilas; $numFilasAct++) {
         echo "<tr>";
         
@@ -17,7 +19,7 @@ function generarTabla() {
             echo '<td id="'.$contenido.'">';
 
             if ($contenido == "rellena") {
-                $num = obtenerNum($numFilasAct, $numColumnasAct);
+                $num = obtenerNum($numFilasAct, $numColumnasAct, $numAntiguo);
                 echo '<div id="numerito">'.$num.'</div>'.$num.'</td>';
             }   else {
                 echo "</td>";
@@ -29,15 +31,24 @@ function generarTabla() {
     echo "</table>";
 }
 
-function obtenerNum($filasActual, $columnasAct){
-    $numObtenido = 10;
+function obtenerNum($filasActual, $columnasAct, array &$numAntiguo){
+    $numObtenido = 0;
 
     if ($filasActual == 0) {
         $numObtenido = $columnasAct * 10 + random_int(0,7);
-    } else if ($filasActual == 1) {
-
+        $numAntiguo[] = $numObtenido;
+    } else if ($filasActual == 1) {    
+        do {
+            $numObtenido = $columnasAct * 10 + random_int(0,7);
+        }while ($numObtenido >= $numAntiguo[$columnasAct]);
+        $numObtenido = $columnasAct * 10 + random_int(0,8);
+        $numAntiguo[] = $numObtenido;
+    } else {
+        do {
+            $numObtenido = $columnasAct * 10 + random_int(0,7);
+        }while ($numObtenido >= $numAntiguo[$columnasAct + 8]);
+        $numObtenido = $columnasAct * 10 + random_int(0,8);
     }
-
     return $numObtenido;
 } 
 
