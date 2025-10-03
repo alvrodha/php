@@ -34,7 +34,7 @@
     $jugador1 = obtenerMano();
     $jugador2 = obtenerMano();
     $pos = calcularGanador($jugador1,$jugador2);
-    $mensaje =  $tmsg[$pos]; 
+    $mensaje =  $resultados[$pos]; 
     $jugador2 = ($jugador2 == PIEDRA)?PIEDRA2:$jugador2;
 
 ?>
