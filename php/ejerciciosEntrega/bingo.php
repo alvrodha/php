@@ -34,21 +34,18 @@ function generarTabla() {
 function obtenerNum($filasActual, $columnasAct, array &$numAntiguo){
     $numObtenido = 0;
 
-    if ($filasActual == 0) {
+    if ($filasActual == 1) {
         $numObtenido = $columnasAct * 10 + random_int(0,7);
-        $numAntiguo[] = $numObtenido;
-    } else if ($filasActual == 1) {    
+        $numAntiguo [] = $numObtenido;
+    } else if ($filasActual == 2) {
         do {
-            $numObtenido = $columnasAct * 10 + random_int(0,7);
-        }while ($numObtenido >= $numAntiguo[$columnasAct]);
-        $numObtenido = $columnasAct * 10 + random_int(0,8);
-        $numAntiguo[] = $numObtenido;
+            $numObtenido = $columnasAct * 10 + random_int(1,8);
+        } while ($numObtenido > $numAntiguo[$columnasAct]);
+        $numAntiguo [] = $numObtenido;
     } else {
-        do {
-            $numObtenido = $columnasAct * 10 + random_int(0,7);
-        }while ($numObtenido >= $numAntiguo[$columnasAct + 8]);
-        $numObtenido = $columnasAct * 10 + random_int(0,8);
+        $numObtenido = $columnasAct * 10 + random_int(2,9);
     }
+    
     return $numObtenido;
 } 
 
