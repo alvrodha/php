@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="default.css" rel="stylesheet">
+    <title>EJ4-04</title>
+</head>
+<body>
+    <div id="container">
+        <div id="header">
+            <h1>Formulario con multiples campos</h1>
+        </div>
+        <div id="content">
+            <form>
+                <h3>Campos de texto:</h3>
+                Nombre: <input type="text"  name="nombre"><br>
+                contraseña: <input type="password" name="contraseña"><br>
+                <hr>
+                <h3>Radio:</h3>
+                Rojo <input type="radio" name="rojo"><br>
+                Naranja <input type="radio" name="Naranja"><br>
+                Verde <input type="radio" name="verde"><br>
+                <hr>
+                <h3>CheckBox:</h3>
+                Quiero recibir publicidad <input type="checkbox" name="publicidad">
+                <hr>
+                <h3>MultiCheckBox:</h3>
+                Ingles<input type="checkbox" name="ingles">     Frances<input type="checkbox" name="frances">       Alemán<input type="checkbox" name="aleman">
+                <hr>
+                <h3>Select:</h3>
+                <h4>Simple: </h4>
+                Año de la finalización de estudios <select name="annoEstudios">
+                    <option>2016</option>
+                    <option>2017</option>
+                    <option>2018</option>
+                    <option>2019</option>
+                </select>
+                <h4>Multiple: </h4>
+                ciudades: <select name="ciudades" multiple>
+                    <option>Madrid</option>
+                    <option>Barcelona</option>
+                    <option>Sevilla</option>
+                    <option>Valencia</option>
+                    <option>Vigo</option>
+                    <option>Albacete</option>
+                </select>
+                <hr>
+                <h3>TextArea:</h3>
+                Escribe tus comentarios: <textarea name="comentarios">Este formulario es muy completo</textarea>
+                <hr>
+                <h3>Botones:</h3>
+                <button>Resetear formulario</button>    <button>Enviar formulario</button>
+
+            </form>
+        </div>
+    </div>
+    
+</body>
+</html>

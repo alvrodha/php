@@ -1,35 +1,49 @@
-<?php
-    $tusuarios = [
+$tusuarios = [
     'pepe' => '1234',
     "luis" => "siul",
     "admin" => "admin"
-    ];
+];
+$msg = "";
+$error = false;
 
-    $msg = "";
-
-    if (empty($_REQUEST['nombre']) || empty($_REQUEST['clave'])) {
-        $msg = "Error: faltan valores, introducir el usuario y la contraseña.<br>";
-        return $msg;
-    }
-
-    $usuario = $_REQUEST["nombre"];
-    $clave = $_REQUEST["clave"];
-
-    if (key_exists($usuario, $tusuarios) && $tusuarios[$usuario] == $clave) {
-        echo "Bienvenido". $usuario;
+if (empty($_REQUEST['nombre']) ||  empty($_REQUEST['clave'])) {
+    $msg = "Error: falta valores, introducir el  usuario y  la contraseña.<br> ";
+    $error = true;
+} else {
+    // PELIGRO: No controlo la seguridad de las entradas
+    $usuario = $_REQUEST['nombre'];
+    $clave   = $_REQUEST['clave'];
+    if (array_key_exists($usuario, $tusuarios) &&  $tusuarios[$usuario] == $clave) {
+        $msg = " Bienvenido $usuario al sistema ";
     } else {
-        echo "Usuario y/o contraseña inválidos". $usuario;
+        $msg = "Error: Usuario y contraseña no válidos.<br> ";
+        $error = true;
     }
+}
+
+
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EJ4-01</title>
+    <link href="default.css" rel="stylesheet" type="text/css" />
 </head>
-<body>
 
-    
+<body>
+    <div id="container" style="width: 400px;">
+        <div id="header">
+            <h1>Procesando formulario</h1>
+        </div>
+
+        <div id="content">
+            <?= $msg ?>
+            <?php if ($error) : ?>
+                <button onclick='window.history.back();'>Volver</button>
+            <?php endif ?>
+        </div>
+    </div>
 </body>
+
 </html>
