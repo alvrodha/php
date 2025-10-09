@@ -13,7 +13,15 @@
         </div>
         <div id="content">
             
+            
+            <?php
+            if (isset($_REQUEST[''])) {
 
+            }
+            ?>
+            Nombre: <? echo $nombre ?><br>
+            Apellido: <? echo $clave ?><br>
+            
         </div>
     </div>
 </body>

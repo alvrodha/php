@@ -1,3 +1,5 @@
 <?php
-    print_r($_REQUEST)
+    var_dump($_REQUEST);
+    echo"<hr>";
+    print"$_REQUEST";
 ?>
