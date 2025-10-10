@@ -1,33 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EJ1-03</title>
+ <meta charset="UTF-8">
+ <title>EJ1-03</title>
+<style>
+</style>
 </head>
-<body> 
-    <code>
-        <?php
-            $n1 = random_int(0,10);
-            echo " Numero generado: <b>$n1</b> </br>";
-
-            for ($i = 0; $i < $n1; $i++) {
-                for ($j = 0; $j < $n1 / 2 - $i; $j++) {
-                    echo " ";
-                }
-                for ($l = 0; $l = $n1 / 2 + 2*$i; $l++) {
-                    echo "*";
-                }
-                
-                for ($k = 0; $k > $n1 / 2 - $i; $k--) {
-                    echo " ";
-                }
-                echo "</br>";
-        }
-        ?>
-    </code>
-    <hr>
-        <?php echo show_source(__FILE__); ?>
-    </hr> 
+<body>
+<?php
+   $numero =  random_int(1,9);
+   $contEspacios = $numero -1;
+   $contAsteriscos = 1;
+   ?>
+   <!-- Utilizo code para que sea monospace -->
+   <code>
+    <?php
+   for($i = 1; $i <=$numero;$i++){
+       for($j = 1; $j<=$contEspacios; $j++){
+           echo "&nbsp"; // Caracter espacio en HTML
+       }
+       for($k = 1; $k<=$contAsteriscos;$k++){
+           echo "*";
+       }
+       $contAsteriscos +=2;
+       $contEspacios--;
+       echo "<br/>";
+       
+   }
+?>
+<hr>
+<?php show_source(__FILE__); ?>
+<hr>
 </body>
 </html>

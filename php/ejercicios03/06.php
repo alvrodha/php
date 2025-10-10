@@ -25,7 +25,7 @@
 </head>
 <body>
     <p>
-        País con más población: <?= $pais_max ?> con <?= $habitantes ?> habitantes<br />
+        País con más población: <?= $pais_max ?> con <?= $habitantes ?> habitantes<br>
     <table border=1>
         <tr>
             <td> <b>Ciudades:</b> </td>

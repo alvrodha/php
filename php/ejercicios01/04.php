@@ -1,28 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EJ1-04</title>
 </head>
+
 <body>
+    <h1>Ejercicio 4</h1>
+
     <?php
-        $num_generado;
-        $num_anterior;
-        $veces_repetido;
-        do{
-            $num_generado = random_int(0,10);
-            $i ++;
-            if ($num_generado == $num_anterior) {
-                $veces_repetido ++;
-            }   else {
-                $veces_repetido = 0;
-            }
-        } while ($veces_repetido < 6);
-        echo "Han salido 6 seguidos tras generar $i números en " . microtime(true) . "milisegundos";
+    $contadorintentos = 0;
+    $contador6 = 0;
+    $tiempoantes = microtime(true);
+    $numAnterior = 0;
+    do {
+        $numero = random_int(1, 10);
+        $contadorintentos++;
+        if ($numero == 6) {
+            // Hay un seis
+            $contador6++;
+        } else {
+            // No hay seis
+            $contador6 = 0;
+        }
+    } while ($contador6 < 3);
+    // Calculo el tiempo que ha pasado
+    $tiempoInvertido = microtime(true) - $tiempoantes;
+
+    echo "Han salido tres 6 seguidos tras generar " . $contadorintentos . " números en " .
+        ($tiempoInvertido * 1000) . " milisegundos.";
     ?>
+
     <hr>
-        <?php echo show_source(__FILE__); ?>
-    </hr>
+    <?php show_source(__FILE__); ?>
+    <hr>
 </body>
+
 </html>

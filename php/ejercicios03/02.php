@@ -1,5 +1,11 @@
 <?php
-    $periodicos = ["El pais" => "https://elpais.com", "El mundo" => "https://www.elmundo.es", "Marca" => "https://www.marca.com", "20Minutos" => "https://www.20minutos.eshttps://www.20minutos.es", "El Confidecial" => "https://www.elconfidencial.com"];
+    $periodicos = [
+        "El pais" => "https://elpais.com",
+        "El mundo" => "https://www.elmundo.es",
+        "Marca" => "https://www.marca.com",
+        "20Minutos" => "https://www.20minutos.eshttps://www.20minutos.es",
+        "El Confidecial" => "https://www.elconfidencial.com"
+    ];
 ?>
 <!DOCTYPE html>
 <html lang="en">

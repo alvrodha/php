@@ -27,25 +27,33 @@
 </head>
 <body>
     <?php
-    $max = 0;
-    $min = 100;
-    $media = 0;
 
-    for ($i = 0; $i < 50; $i++) {
-        $num_generado = random_int(0, 100);
-        if ($num_generado < $min) {
-            $min = $num_generado;
-        } else if ($num_generado > $max) {
-            $max = $num_generado;
+    define('CANTIDAD', 50);
+    define('VALORMAX',100);
+
+    $numero=random_int(1,VALORMAX);
+
+    $minimo=$numero;
+    $maximo=$numero;
+    $suma=$numero;
+
+    for($i=1; $i<CANTIDAD; $i++){
+        $numero=random_int(1,VALORMAX);
+
+        if($numero>$maximo){
+            $maximo=$numero;
         }
-        $media += $num_generado;
+        if($numero<$minimo){
+            $minimo=$numero;
+        }
+        $suma+=$numero;
     }
-    $media = $media / 50;
+    $media=$suma/CANTIDAD;
     ?>
     <table>
         <tr><th colspan="2">Generación de 50 numeros aleatorios</th></tr>
-        <tr><td>Mínimo</td><td><?= $min ?></td></tr>
-        <tr><td>Máximo</td><td><?= $max ?></td></tr>
+        <tr><td>Mínimo</td><td><?= $minimo ?></td></tr>
+        <tr><td>Máximo</td><td><?= $maximo ?></td></tr>
         <tr><td>Media</td><td><?= $media ?></td></tr>
     </table>
     <hr>
