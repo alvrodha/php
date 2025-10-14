@@ -5,7 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>captura IMG</title>
     <style>
-
+        body {
+            background: gray;
+        }
+        #container {
+            border-radius: 10px;
+            margin: 0 auto;
+            padding: 12px;
+            width: 500px;
+            background:#fff;
+            border: solid 1px;
+        }
     </style>
 </head>
 <body>
@@ -14,30 +24,33 @@
                 <h1>Formulario de jugador</h1>
         </div>
         <div id="content">
-            <form>
-            Nombre:<br>
-            <input type="text" name="nombre"><br>
-            Alias:<br>
-            <input type="text" name="Alias"><br>
-            Edad:<br>
-            <input type="number" name="edad"><br>
-            Armas a elegir (puedes elegir mas de una):<br>
-            <select name="armas">
-                <option>Maza</option>
-                <option>Antorcha</option>
-                <option>Martillo</option>
-                <option>Latigo</option>
-            </select><br>
-            ¿Practica artes mágicas?<br>
-            <input type="radio" name="magiaSi">SI<br>
-            <input type="radio" name="magiaNo">NO<br>
-            Subir Imagen:<br>
-            <input type="image" value="Examinar..."><br>
-            <input type="submit" name="enviar" value="enviar"><input type="reset" name="borrar" value="borrar">
+            <form action="index.php" method="POST" enctype="multipart/form-data" onsubmit="return validarFormulario();">
+                <label for="nombre">Nombre:</label><br>
+                <input type="text" name="nombre" id="nombre" required><br>
 
+                <label for="alias">Alias:</label><br>
+                <input type="text" name="alias" id="alias" required><br>
+
+                <label for="edad">Edad:</label><br>
+                <input type="number" name="edad" id="edad" max="100" required><br>
+
+                <label for="arma">Armas a elegir: </label><br>
+                <select multiple required >
+                    <option id="maza" value="maza">Maza</option>
+                    <option id="antorcha" value="antorcha">antorcha</option>
+                    <option id="martillo" value="martillo">Martillo</option>
+                    <option id="latigo" value="latigo">Latigo</option>
+                </select><br>
+
+                <label for="magia">¿Practicas aretes mágicas?</label><bR>
+                <input type="radio" id="SI">SI<br>
+                <input type="radio" id="NO">NO<br>
+
+                <label for="imagen">Subir Imagen:</label><br>
+                <input type="file" name="imagen" id="imagen" accept="image/png"><br>
+
+                <input type="submit" value="Enviar">
             </form>
-            
-
         </div>
     </div>
     
