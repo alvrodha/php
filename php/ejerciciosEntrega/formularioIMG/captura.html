@@ -32,24 +32,28 @@
                 <input type="text" name="alias" id="alias" required><br>
 
                 <label for="edad">Edad:</label><br>
-                <input type="number" name="edad" id="edad" max="100" required><br>
+                <input type="number" name="edad" id="edad" min="0" required><br>
 
-                <label for="arma">Armas a elegir: </label><br>
-                <select multiple required >
-                    <option id="maza" value="maza">Maza</option>
-                    <option id="antorcha" value="antorcha">antorcha</option>
-                    <option id="martillo" value="martillo">Martillo</option>
-                    <option id="latigo" value="latigo">Latigo</option>
-                </select><br>
+                <fieldset class="weapons-option">
+                    <legend>Armas a elegir (puedes elegir varias): </legend>
+                    <label><input type="checkbox" name="armas[]" value="Maza">Maza</label>
+                    <label><input type="checkbox" name="armas[]" value="Antorcha">Antorcha</label>
+                    <label><input type="checkbox" name="armas[]" value="Martillo">Martillo</label>
+                    <label><input type="checkbox" name="armas[]" value="Látigo">Látigo</label>
+                </fieldset><br>
 
-                <label for="magia">¿Practicas aretes mágicas?</label><bR>
-                <input type="radio" id="SI">SI<br>
-                <input type="radio" id="NO">NO<br>
+                <fieldset class="artes_magicas">
+                    <legend>¿Practicas artes mágicas?</legend>
+                    <label><input type="radio" name="artes_magicas" value="SI">SI</label>
+                    <label><input type="radio" name="artes_magicas" value="NO">NO</label>
+                </fieldset>
 
+                <input type="hidden" name="MAX_FILE_SIZE" value="50000">
                 <label for="imagen">Subir Imagen:</label><br>
                 <input type="file" name="imagen" id="imagen" accept="image/png"><br>
 
                 <input type="submit" value="Enviar">
+                <input type="reset" value="Borrar">
             </form>
         </div>
     </div>

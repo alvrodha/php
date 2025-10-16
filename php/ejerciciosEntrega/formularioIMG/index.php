@@ -1,50 +1,42 @@
 <?php
-$uploadDir = "uploads/";
-$skull = "188409.png";
-
-if ($_SERVER["REQUEST_METHOD"] === "GET") {
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
     include("captura.html");
-    exit;
-}
-function limpiar($data) {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
-    return $data;
+    exit();
 }
 
-$nombre = limpiar($_POST["nombre"] ?? "");
-$alias = limpiar($_POST["alias"] ?? "");
-$edad = intval($_POST["edad"] ?? 0);
-$armas = limpiar($_POST["armas"] ?? "NO");
-$magia = limpiar($_POST["SI"] ?? "NO");
-$mensajeError = "";
-$imagenFinal = $skull;
+$directorioSubida = "uploads/";
+$imagenSubida = "";
+$errorSubida = "";
 
-if (isset($_FILES["imagen"]) && $_FILES["imagen"]["error"] === UPLOAD_ERR_OK) {
-    $nombreTmp = $_FILES["imagen"]["tmp_name"];
-    $nombreArchivo = basename($_FILES["imagen"]["name"]);
-    $tipo = mime_content_type($nombreTmp);
-    $tamano = $_FILES["imagen"]["size"];
+if ($_FILES['imagen']['error'] != UPLOAD_ERR_NO_FILE) {
+    if ($_FILES['imagen']['error'] === UPLOAD_ERR_OK ) {
+        $nombreArchivo = basename($_FILES["imagen"]["name"]);
+        $rutaArchivo = $directorioSubida . $nombreArchivo;
 
-    if ($tipo !== "image/png") {
-        $mensajeError = "⚠️ Solo se permiten imágenes PNG.";
-    } elseif ($tamano > 10 * 1024) {
-        $mensajeError = "⚠️ La imagen excede los 10KB.";
-    } else {
-        if (!file_exists($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
-        }
-        $rutaDestino = $uploadDir . uniqid("jugador_") . ".png";
-        if (move_uploaded_file($nombreTmp, $rutaDestino)) {
-            $imagenFinal = $rutaDestino;
+        if ($_FILES['imagen']['type'] == "image/png" && $_FILES['imanen']['size'] <= 10000) {
+            if  (move_uploaded_file($_FILES["imagen"]["tmp_name"], $rutaArchivo)) {
+                $imagenSubida = $rutaArchivo;
+            } else {
+                $errorSubida = "No se ha podido copiar la imagen";
+            }
         } else {
-            $mensajeError = "⚠️ Error al subir la imagen.";
+            $errorSubida = "El fichero no es una imagen o supera el tamaño máximo";
         }
+    } else {
+        $errorSubida = "Error al subir el fichero ".$_FILES['imagen']['error'];
     }
-} else if ($_FILES["imagen"]["error"] !== UPLOAD_ERR_NO_FILE) {
-    $mensajeError = "⚠️ Error al subir la imagen.";
+} else {
+    $errorSubida = 'No se ha indicao imagen a subir';
 }
+
+$nombre = htmlspecialchars($_POST['nombre']);
+$alias = htmlspecialchars($_POST['alias']);
+$edad = htmlspecialchars($_POST['edad']);
+
+$armas = isset($_POST['armas']) ? $_POST['armas'] : [];
+$artes_magicas = htmlspecialchars($_POST['artes_magicas']) === 'SI' ? 'Si' : 'No';
+
+$listadearmas = count($armas) > 0 ? implode(', ', $armas) : 'Ninguna';
 ?>
 
 <!DOCTYPE html>
@@ -76,20 +68,31 @@ if (isset($_FILES["imagen"]) && $_FILES["imagen"]["error"] === UPLOAD_ERR_OK) {
 <body>
     <h2>Datos del jugador</h2>
     <div id="content">
-        <div id="texto">
-            <p><strong>Nombre:</strong> <?= $nombre ?></p>
-            <p><strong>Alias:</strong> <?= $alias ?></p>
-            <p><strong>Edad:</strong> <?= $edad ?></p>
-            <p><strong>Armas sleccionadas:</strong> <?= $armas ?></p>
-            <p><strong>¿Practicas artes mágicas?</strong> <?= $magia ?></p>
-        </div>
-        <div id="campoImagen">
-            <h3>Imagen:</h3>
-            <img src="<?= $imagenFinal ?>" alt="Imagen del jugador">
-            <?php if ($mensajeError): ?>
-                <p class="error"><?= $mensajeError ?></p>
-            <?php endif; ?>
-        </div>
+        <table>
+            <tr>
+            <td>
+                <p><strong>Nombre:</strong> <?= $nombre ?></p>
+                <p><strong>Alias:</strong> <?= $alias ?></p>
+                <p><strong>Edad:</strong> <?= $edad ?></p>
+                <p><strong>Armas seleccionadas:</strong> <?= $listadearmas ?>
+                </p>
+                <p><strong>¿Practica artes mágicas?:</strong> <?= $artes_magicas ?></p>
+
+            </td>
+            <td>
+                <?php if ($imagenSubida): ?>
+                    <p><strong>Imagen subida:</strong></p>
+                    <img src="<?= $imagenSubida; ?>" alt="Imagen del jugador">
+                <?php else: ?>
+                    <p><strong>No se subió ninguna imagen.</strong></p>
+                    <img src="188409.png" alt="Imagen del jugador">
+                    <p>
+                        <?= $errorSubida ?>
+                    </p>
+                <?php endif; ?>
+            </td>
+            </tr>
+        </table>
     </div>
     
 </body>
