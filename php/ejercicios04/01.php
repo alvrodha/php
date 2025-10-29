@@ -1,3 +1,4 @@
+<?php
 $tusuarios = [
     'pepe' => '1234',
     "luis" => "siul",

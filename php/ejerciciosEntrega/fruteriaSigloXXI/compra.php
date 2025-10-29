@@ -15,10 +15,7 @@
     <form method="post">
         <label for="fruta">Selecciona la fruta:</label>
         <select name="fruta" id="fruta">
-			<option value="Platanos">Plátanos 🍌</option>
-			<option value="Naranjas">Naranjas 🍊</option>
-			<option value="Limones">Limones 🍋</option>
-			<option value="Manzanas">Manzanas 🍎</option>
+            <? generarOpciones() ?>
         </select>
         
         <label for="cantidad">Cantidad (unidades/kg):</label>

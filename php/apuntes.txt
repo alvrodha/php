@@ -1,0 +1,139 @@
+chequear por.....: ctype_....;
+
+<--/ARRAYS\-->
+Extrae el último valor de la matriz: array_pop($array);
+Extrae el primer valor de la matriz: array_shift($array);
+Inserta elementos al final de la matriz: array_push($array, $valoraAñadir);
+Inserta elementos al principio de la matriz: arrray_unshift($array, $valoraAñadir)
+Ordena los elementos del array de menor a mayor: sort($array)   ;
+Ordena los elementos del array de mayor a menor: asort($array);
+Máximo y minimo de un array: max($array); min($array);
+
+<--/NÚmeros\-->
+Cambios de bases: decoct($valor); dechex($valor); decbin($valor); octdec($valor); hexdec($valor); bindec($valor)
+Número absoluto: abs($valor);
+Entero mas próximo: round($valor);
+Raiz cuadrada: sqrt($valor)
+
+<--/STRINGS\-->
+Longitud de la cadena: strlen($cadena);
+Converir a mayúsculas: strtolower($cadena);     Minúsculas: strtoupper($cadena);
+Converir a mayúsculas el primer caracter de cada palabra: ucwords($cadena);
+Convertir a mayúsculas la primera letra de la cadena: ucfirst($cadena);
+Devuelve el caractter referente a ASCI: chr($letra);    De una cadena: ord($cadena)
+Elimina espacios al principo de la cadena: Itrim($cadena);
+Elimina espacios al final de la cadena: rtrim($cadena);
+Elimina espacios al final y al principo de la cadena: trim($cadena);
+
+<--/SERVER\-->
+Devuelve la dirección IP donde se ejecuta el script: SERVER_ADR;
+Devuelve el nombre donde se ejecuta el script: SERVER_NAME;
+Devuelve el puerto donde se ejecuta el script: SERVER_PORT;
+Devuelve el método de petición para acceder a la página: REQUEST_METHOD;
+Devuelve la fecha UNIX desde el inicio de la petición: REQUEST_TIME;
+
+<--/COOKIES\-->
+$path = dirname($SEVER['REQUEST_URI']);
+Envía una cookie: setcookie($nombre, $valor, $fecha_expiraión, $path)
+
+<--/Subida de un archivo con POST\-->
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h2>Subida y alojamiento de archivo en el servidor</h2>
+    <form enctype="multipart/form-data" action="subirfichero.php" method="POST">
+        <label for="nombre">Indique su nombre</label>
+        <input type="text" name="nombre"><br>
+        <label for="directorio">Indique el nombre del directorio donde se ubicar el archivo</label>
+        <!-- El directorio tiene que tener la ruta completa o relativa -->
+        <input type="text" name="directorio" /> <br />
+        <!-- Se fija en el cliente el tamaño máximo en bytes ( no es seguro ) el limite máximo se debe tener
+        el archivo
+        Se debe controlar también en el servidor (php.ini)
+        -->
+        <input type="hidden" name="MAX_FILE_SIZE" value="100000" /> <!-- 100Kbytes -->
+        <label>Elija el archivo a subir</label> <input name="archivo1" type="file" /> <br />
+        <input type="submit" value="Subir archivo" />
+    </form>
+</body>
+</html>
+
+<--/Procesamiento de una fichero\-->
+<html>
+<head>
+<title>Procesa una subida de archivos </title>
+<meta charset="UTF-8">
+</head>
+<?php
+// se incluyen los códigos de error que produce la subida de archivos en PHP
+// Posibles errores de subida
+$codigosErrorSubida= [
+ 0 => 'Subida correcta',
+ 1 => 'El tamaño del archivo excede el admitido por el servidor', // directiva
+upload_max_filesize en php.ini
+ 2 => 'El tamaño del archivo excede el admitido por el cliente', // directiva MAX_FILE_SIZE en
+el formulario HTML
+ 3 => 'El archivo no se pudo subir completamente',
+ 4 => 'No se seleccionó ningún archivo para ser subido',
+ 6 => 'No existe un directorio temporal donde subir el archivo',
+ 7 => 'No se pudo guardar el archivo en disco', // permisos
+ 8 => 'Una extensión PHP evito la subida del archivo' // extensión PHP
+];
+$mensaje = '';
+// No se recibe nada, error al enviar el POST, se supera post_max_size
+if (count($_POST) == 0 ){
+ $mensaje= " Error: se supera el tamaño máximo de un petición POST ";
+ }
+// si no se reciben el directorio de alojamiento y el archivo, se descarta el proceso
+else if ((! isset($_FILES['archivo1']['name'])) or (! isset($_REQUEST['directorio']))) {
+ $mensaje .= 'ERROR: No se indicó el archivo y/o no se indicó el directorio';
+} else
+ { // se reciben el directorio de alojamiento y el archivo
+ $directorioSubida = $_REQUEST['directorio']; // debe permitir la escrita para Apache
+ // Información sobre el archivo subido
+ $nombreFichero = $_FILES['archivo1']['name'];
+ $tipoFichero = $_FILES['archivo1']['type'];
+ $tamanioFichero = $_FILES['archivo1']['size'];
+ $temporalFichero = $_FILES['archivo1']['tmp_name'];
+ $errorFichero = $_FILES['archivo1']['error'];
+ $mensaje .= 'Intentando subir el archivo: ' . ' <br />';
+ $mensaje .= "- Nombre: $nombreFichero" . ' <br />';
+ $mensaje .= '- Tamaño: ' . ($tamanioFichero / 1024) . ' KB <br />';
+ $mensaje .= "- Tipo: $tipoFichero" . ' <br />' ;
+ $mensaje .= "- Nombre archivo temporal: $temporalFichero" . ' <br />';
+ $mensaje .= "- Código de estado: $errorFichero" . ' <br />';
+ $mensaje .= "- Código de estado: $errorFichero" . ' <br />';
+
+ $mensaje .= '<br />RESULTADO<br />';
+
+// Obtengo el código de error de la operación, 0 si todo ha ido bien
+ if ($errorFichero > 0) {
+ $mensaje .= "Se a producido el error: $errorFichero:"
+ . $codigosErrorSubida[$errorFichero] . ' <br />';
+ } else { // subida correcta del temporal
+ // si es un directorio y tengo permisos
+ if ( is_dir($directorioSubida) && is_writable ($directorioSubida)) {
+ //Intento mover el archivo temporal al directorio indicado
+ if (move_uploaded_file($temporalFichero, $directorioSubida .'/'. $nombreFichero) ==
+true) {
+ $mensaje .= 'Archivo guardado en: ' . $directorioSubida .'/'. $nombreFichero . ' <br
+/>';
+ } else {
+ $mensaje .= 'ERROR: Archivo no guardado correctamente <br />';
+ }
+ } else {
+ $mensaje .= 'ERROR: No es un directorio correcto o no se tiene permiso de escritura
+<br />';
+ }
+ }
+}
+?>
+<body>
+<?php echo " Bienvenido ".$_REQUEST['nombre']."<br>"?>
+<?php echo $mensaje; ?>
+<br />
+<a href="subirfichero.html">Volver a la página de subida</a>
+</body>
+</html>

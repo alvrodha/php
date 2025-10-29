@@ -1,31 +1,34 @@
 <?php
-    include_once("infoPaises.php");
+// PRIMERA VERSIÓN CALCULO EL MÁXIMO MANUALMENTE
+// Incluyo las tablas con datos 
+include_once 'infopaises.php';
 
-    $max = 0;
-    $pais_max = "";
-
-    foreach ($paises as $pais => $info) {
-        if ($info["Poblacion"] > $max) {
-            $max = $info["Poblacion"];
-            $pais_max = $pais;
-        }
+// Obtengo el pais con mas población
+$max = 0;
+$pais_max = "";
+foreach ($paises as $pais => $info) {
+    if ($info['Poblacion'] > $max) {
+        $pais_max = $pais;
+        $max = $info['Poblacion'];
     }
+}
+// Nº de habitantes con datos formateados
+$habitantes = number_format($max, 0, ',', '.');
 
-//Forma moderna
-    $poblacionMax = number_format($max, 0, ',','.');
-    $listaCiudades = $ciudades[$pais_max];
+// Obtengo sus ciudades
+$listaciudades = $ciudades[$pais_max];
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EJ3-06</title>
+    <title>Paises y ciudades</title>
 </head>
+
 <body>
     <p>
-        País con más población: <?= $pais_max ?> con <?= $habitantes ?> habitantes<br>
+        País con más población: <?= $pais_max ?> con <?= $habitantes ?> habitantes<br />
     <table border=1>
         <tr>
             <td> <b>Ciudades:</b> </td>
@@ -38,6 +41,6 @@
     <hr>
     <?php show_source(__FILE__); ?>
     <hr>
-    
 </body>
+
 </html>

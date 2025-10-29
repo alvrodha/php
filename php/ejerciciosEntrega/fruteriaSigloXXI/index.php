@@ -1,4 +1,5 @@
 <?php
+require_once "precios.php";
 session_start();
 
 // Manejo de la sesión con dos valores
@@ -12,7 +13,7 @@ if (isset($_GET['cliente']) && !isset($_SESSION['cliente'])) {
     $_SESSION['pedidos'] = [];
 }
 
-// No hay definido un cliente todavía en la session 
+// No hay definido un cliente
 if (!isset($_SESSION['cliente'])) {
     require_once 'bienvenida.php';
     exit();
@@ -35,7 +36,7 @@ if (isset($_POST["accion"])) {
             unset($_SESSION["pedidos"][$fruta]);
             break;
         case " Terminar ":
-            $compraRealizada = htmlTablaPedidos();
+            $compraRealizada = htmlTablaPedidos($precios);
             // Destruyo la sesión y vuelvo a la página de bienvenida
             require_once "despedida.php";
             session_destroy();
@@ -43,19 +44,21 @@ if (isset($_POST["accion"])) {
     }
 }
 
-$compraRealizada = htmlTablaPedidos();
+$compraRealizada = htmlTablaPedidos($precios);
 require_once 'compra.php';
 
-
-// Función axiliar que genera una tabla HTML a partir  la tabla de pedidos
-// Almacenada en la sesión
-function htmlTablaPedidos(): string
-{
+function htmlTablaPedidos($precios): string {
     $msg = "";
     $msg .= "<table>";
+    $importeTotal = 0;
+    $msg .= "<th>Fruta</th><th>Cantidad</th><th>Subtotal</th>";
     foreach ($_SESSION['pedidos'] as $fruta => $cantidad) {
-        $msg .= "<tr><td>" . $fruta . ": </td><td>" . $cantidad . "</td></tr>";
+        $precio = $precios[$fruta];
+        $importe = $precio * $cantidad;
+        $importeTotal += $importe;
+        $msg .= "<tr><td>" . $fruta . ": </td><td>" . $cantidad . "<td></td>" . $importe . "</td></tr>";
     }
+    $msg .= "<tr><td>Importe Total: " . $importeTotal . "</td></tr>";
     $msg .= "</table";
     return $msg;
 }
