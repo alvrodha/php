@@ -14,6 +14,7 @@ Cambios de bases: decoct($valor); dechex($valor); decbin($valor); octdec($valor)
 Número absoluto: abs($valor);
 Entero mas próximo: round($valor);
 Raiz cuadrada: sqrt($valor)
+Elimina una variable: unset($valor);
 
 <--/STRINGS\-->
 Longitud de la cadena: strlen($cadena);
