@@ -1,13 +1,24 @@
 <?php
-$contenido = "";
-if (isset($_GET['directorio'])){
-    $nombreDirectorio = $_GET['directorio'];
-    if (is_dir($nombreDirectorio)){
-        
+$contenido = false;
+$dir = $_GET('directorio');
+
+if (isset($dir)) {
+    if (is_dir($dir)){
+        $tablaDir = infoDir($dir);
+
     } else {
-        $contenido = "El directorio no es válido.";
+        $contenido .= "No es un directorio";
     }
+} else {
+    $contenido .= "Directorio no encontrado";
 }
+
+function infoDir($dir) :array {
+    $resu = [];
+    opendir($dir);
+    return $resu;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -18,9 +29,14 @@ if (isset($_GET['directorio'])){
     <title>EJ7-03</title>
 </head>
 <body>
-    <h1>Información de un directorio</h1>
-    <fom>
-        Ver información del directorio: <input type="text" name="directorio">
-    </fom>
+    <?php if ($contenido ) : ?>
+    <?= $contenido ?>
+    <?php else : ?>
+    <form>
+        <label>Directorio:</label>
+        <input type="text" name="directorio">
+        <input type="submit" value="Enviar">
+    </form>
+    <?php endif ?>
 </body>
 </html>
