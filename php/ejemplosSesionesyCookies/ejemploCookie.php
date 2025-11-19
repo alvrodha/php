@@ -13,7 +13,7 @@
 
   // Borrado de cookies y variables
   if (isset($_POST["borrar"])) {
-    setcookie("fruta", NULL, -1);
+    setcookie("fruta", "", time() -100);
     header("Refresh:0"); // Recargo la página
   }
 ?>
