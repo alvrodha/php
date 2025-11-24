@@ -4,10 +4,10 @@ if (isset($_GET['fichero'])){
     $nombreFichero = $_GET['fichero'];
     if (is_readable(($nombreFichero))){
         $tlinea = file($nombreFichero);
-        $cont = 1;
+        $cont = 0;
         $contenido = "<code><pre>";
         foreach ($tlinea as $linea){
-            $contenido .= $cont . ":" . htmlspecialchars($linea);
+            $contenido .= $cont + 1 . ":" . htmlspecialchars($linea);
             $cont++;
         }
         $contenido .= "</pre></code>";

@@ -1,42 +1,57 @@
 <?php
+
 $contenido = false;
-$dir = $_GET('directorio');
 
-if (isset($dir)) {
-    if (is_dir($dir)){
-        $tablaDir = infoDir($dir);
+if (isset($_GET['directorio'])) {
+    $nombreDirectorio = $_GET['directorio'];
 
+    if (is_dir($nombreDirectorio)) {
+        if (opendir($nombreDirectorio)) {
+            $tablaFicheros = infoDir($_GET['directorio']);
+            $contenido  = "<table><th>Nombre</th><th>Tipo</th><th><Tamaño</th>";
+            foreach ($tablaFicheros as $datosf) {
+                $contenido .= "<tr><td>" . $datosf[0] . "</td><td>" . $fatosf[1] . "</td><td>" . $datosf[2] . "</td></td>";
+            }
+            $contenido .= "</table>";
+        } else {
+            die("No se puede habrir el directorio: " . $nombreDirectorio);
+        }
     } else {
-        $contenido .= "No es un directorio";
-    }
-} else {
-    $contenido .= "Directorio no encontrado";
+        die("No existe el directorio: " . $nombreDirectorio);
+    }   
 }
 
-function infoDir($dir) :array {
+function infoDir($dir):array {
     $resu = [];
-    opendir($dir);
+
+    if ($dh = opendir($dir)) {
+        while (($file = readdir($dir)) !== false) {
+            $resu ;
+            $nombreRuta = $dir . "/" . $file;
+            filesize($nombreRuta);
+        }
+    }
+
     return $resu;
 }
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EJ7-03</title>
+    <title>Document</title>
 </head>
 <body>
-    <?php if ($contenido ) : ?>
-    <?= $contenido ?>
+    <h1>Mostrando un directorio</h1>
+    <?php if ($contenido) : ?>
+        <?= $contenido ?>
     <?php else : ?>
     <form>
-        <label>Directorio:</label>
-        <input type="text" name="directorio">
-        <input type="submit" value="Enviar">
+        Directorio a mostrar: <input type="text" name="directorio">
     </form>
-    <?php endif ?>
+    <?php endif; ?>
+    
 </body>
 </html>
