@@ -37,6 +37,19 @@ Devuelve la fecha UNIX desde el inicio de la petición: REQUEST_TIME;
 $path = dirname($SEVER['REQUEST_URI']);
 Envía una cookie: setcookie($nombre, $valor, $fecha_expiraión, $path)
 
+
+
+$IP = $_SERVER['REMOTE_ADDR'];
+
+<--/FICHEROS\-->
+Salto de linea para no machacarlo: PHP_EOL;
+Escribe un fichero: @file_put_contents(ruta, , FILE_apend);
+Abre y ciera un fichero: fopen(ruta, modo) fclose(ruta);
+Obtiene el CSV a partir de un fichero devuelve un Array: fgetcsv($fichero)
+while ($valores = fgetcsv($fich)) {}
+
+
+
 <--/Subida de un archivo con POST\-->
 <html>
 <head>
