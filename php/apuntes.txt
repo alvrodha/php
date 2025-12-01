@@ -50,6 +50,10 @@ while ($valores = fgetcsv($fich)) {}
 
 
 
+<--/POO\-->
+para hacer funciones comunes a clases sin relación: trait Hablar {public function decirhola{} function decirhola{}  class Persona{use Hablar; } }
+
+
 <--/Subida de un archivo con POST\-->
 <html>
 <head>
