@@ -10,9 +10,10 @@ include "dat/Cliente.php";
 function cargarTablaClientes (): array {
 
     $tclientes = [];
-    $fich = fopen('dat/clientes.csv','w');
-    while ( $valores = fgetcsv($fich)){
-        $tclientes[] = $valores;
+    $fich = fopen('dat/clientes.csv','r');
+    while ( $datosCli = fgetcsv($fich)){
+        $cli = new Cliente( $datosCli[0],$datosCli[1],$datosCli[2],$datosCli[3]);
+        $tclientes[$cli -> dni] = $cli;
     }
     fclose($fich);
     return $tclientes;
@@ -26,8 +27,9 @@ function cargarTablaClientes (): array {
 function salvarTablaClientes(array $tabla){
 
     $fich = fopen('dat/clientes.csv','w');
-    foreach( $tabla as $valores){
-        fputcsv($fich,$valores);
+    foreach( $tabla as $cli){
+        $tablaDatos = [ $cli->dni, $cli->nombre, $cli->clavehash, $cli->puntos ];
+        fputcsv($fich,$tablaDatos);
     }
     fclose($fich);
 }
@@ -40,16 +42,14 @@ function salvarTablaClientes(array $tabla){
  */
 function validarCliente($dni, $clave) :bool{
 
-    $resu = false;
-    $fich = fopen("dat/cliente.csv","r");
-    while ( $valores = fgetcsv($fich)){
-        if ($valores[1] == $dni && password_verify($clave,$valores[2])){
-            $resu = true;
-            break;
-        }
+    $tablaCli = cargarTablaClientes();
+    if (array_key_exists($dni, $tablaCli) && password_verify($clave, $tablaCli[$dni]->clavehash)) {
+        $tablaCli[$dni]->puntos = $puntos;
+        salvarTablaClientes($tablaCli);
+        return true;
+    } else {
+        return false;
     }
-    fclose($fich);
-    return $resu;
 }
 
 /**
@@ -60,12 +60,11 @@ function validarCliente($dni, $clave) :bool{
 */
 function anotarPuntos($dni,$puntos): bool {
     $tablaCli = cargarTablaClientes();
-    $fich = fopen("usuarios.dat","w");
-        while ( $valores = fgetcsv($fich)) {
-            if ($valores[0] == $dni) {
-                $valores[3] = $puntos;
-            }
-        }
-    fclose($fich);
-    return false;
+    if (array_key_exists($dni, $tablaCli) && password_verify($clave, $tablaCli[$dni]->clavehash)) {
+        $tablaCli[$dni]->puntos = $puntos;
+        salvarTablaClientes($tablaCli);
+        return true;
+    } else {
+        return false;
+    }
 }

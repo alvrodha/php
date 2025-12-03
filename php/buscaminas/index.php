@@ -19,8 +19,8 @@
             <option value="medio">Medio</option>
             <option value="dificil">Difícil</option>
         </select>
+        <input type="submit" value="INICIAR JUEGO" onclick="empezarJuego($columnas, $filas, $dificultad);">
     </form>
-    <button id="startButton">Iniciar Juego</button>
     <div id="gameBoard">
         <?php
             include 'funiones.php';
@@ -29,10 +29,13 @@
             $columnas = $_GET['columnas'] ?? 10;
             $dificultad = $_GET['dificultad'] ?? 'facil';
 
-            $tablero = generarTablero($columnas, $filas);
-            $tableroConBombas = introducirBombas($tablero, $dificultad);
-            $tableroFinal = generarNumero($tableroConBombas);
-            echo mostrarTablero($tableroFinal);
+            function empezarJuego($columnas, $filas, $dificultad) {
+                $tablero = generarTablero($columnas, $filas);
+                $tableroConBombas = introducirBombas($tablero, $dificultad);
+                $tableroFinal = generarNumero($tableroConBombas);
+                echo mostrarTablero($tableroFinal);
+            }
+            
         ?>
     </div>
 </body>

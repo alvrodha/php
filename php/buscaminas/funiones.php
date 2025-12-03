@@ -1,7 +1,7 @@
 <?php
-const FACIL = 12;
-const MEDIO = 16;
-const DIFICIL = 30;
+const FACIL = 0.12;
+const MEDIO = 0.16;
+const DIFICIL = 0.32;
 
 function generarTablero($columnas, $filas) {
     $tablero = [];
@@ -35,16 +35,16 @@ function introducirBombas($tablero, $dificultad) {
 
     switch ($dificultad) {
         case 'facil':
-            $numBombas = FACIL * $filas * $columnas / 100;
+            $numBombas = round(FACIL * $filas * $columnas);
             break;
         case 'medio':
-            $numBombas = MEDIO * $filas * $columnas / 100;
+            $numBombas = round(MEDIO * $filas * $columnas);
             break;
         case 'dificil':
-            $numBombas = DIFICIL * $filas * $columnas / 100;
+            $numBombas = round(DIFICIL * $filas * $columnas);
             break;
         default:
-            $numBombas = FACIL * $filas * $columnas / 100;
+            $numBombas = round(FACIL * $filas * $columnas);
     }
 
     for ($i = 0; $i < $numBombas; $i++) {
@@ -61,32 +61,49 @@ function introducirBombas($tablero, $dificultad) {
 function generarNumero($tablero) {
     $filas = count($tablero);
     $columnas = count($tablero[0]);
-    $minasAlrededor = 0;
 
     for ($fila = 0; $fila < $filas; $fila++) {
         for ($columna = 0; $columna < $columnas; $columna++) {
-            if ($tablero[$fila][$columna] != -1) {
-                for ($i = -1; $i <= 1; $i++) {
-                    for ($j = -1; $j <= 1; $j++) {
-                        if ($i == 0 && $j == 0) {
+            if (esUnaBomba($tablero, $fila, $columna)) {
+                for ($i = -1; $i < 1; $i++) {
+                    for ($j = -1; $j < 1; $j++) {
+                        if ($i = 0 && $j = 0) {
                             continue;
-                        }
-                        $nuevaFila = $fila + $i;
-                        $nuevaColumna = $columna + $j;
-                        if ($nuevaFila >= 0 && $nuevaFila < $filas && $nuevaColumna >= 0 && $nuevaColumna < $columnas) {
-                            if ($tablero[$nuevaFila][$nuevaColumna] == -1) {
-                                $minasAlrededor++;
+                        } else {
+                            if (isset($tablero[$fila + $i][$columna + $j]) && !esUnaBomba($tablero, $fila + $i, $columna + $j)) {
+                                $tablero[$fila + $i][$columna + $j]++;
                             }
                         }
                     }
                 }
-                $tablero[$fila][$columna] = $minasAlrededor;
-                $minasAlrededor = 0;
+                /*
+                if ($fila = 0 && $columna = 0) {
+                    if (!esUnaBomba($tablero, $fila, $columna + 1)) {
+                        $tablero[$fila][$columna + 1]++;
+                    }
+                    if (!esUnaBomba($tablero, $fila + 1, $columna + 1)) {
+                        $tablero[$fila + 1][$columna + 1]++;
+                    }
+                    if (!esUnaBomba($tablero, $fila +1, $columna)) {
+                        $tablero[$fila + 1][$columna]++;
+                    }
+                }
+                if ($fila = 0) {
+                    if (!esUnaBomba($tablero, $fila, $columna -1)) {
+                        $tablero[$fila][$columna -1]++;
+                    }
+                    if (!esUnaBomba($tablero, $fila, $columna + 1)) {
+                        $tablero[$fila][$columna + 1]++;
+                    }
+                }
+                */
             }
         }
     }
     return $tablero;
 }
 
-
+function esUnaBomba($tablero, $fila, $columna) {
+    return $tablero[$fila][$columna] == -1;
+}
 ?>
