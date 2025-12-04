@@ -5,16 +5,20 @@ class Producto {
     private $precio;
     private $stock;
 
-    function __get($name) {
+    public function __get($name) {
         if (property_exists($this, $name)) {
             return $this->$name;
         }
     }
 
-    function __set($name, $value) {
+    public function __set($name, $value) {
         if (property_exists($this, $name)) {
-            return $this->$name = $value;
+            $this->$name = $value;
         }
+    }
+
+    function info() {
+        return "ID: $this->id, Nombre: $this->nombre, Precio: $this->precio, Stock: $this->stock";
     }
 }
 ?>
