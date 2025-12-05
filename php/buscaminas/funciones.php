@@ -47,11 +47,12 @@ function introducirBombas($tablero, $dificultad) {
             $numBombas = round(FACIL * $filas * $columnas);
     }
 
-    for ($i = 0; $i < $numBombas; $i++) {
-        $numRandomFilas = random_int(0, $filas - 1);
-        $numRandomColumnas = random_int(0, $columnas - 1);
-        if ($tablero[$numRandomFilas][$numRandomColumnas] = 0) {
-            $tablero[$numRandomFilas][$numRandomColumnas] = -1;
+    while ($numBombas > 0) {
+        $f = random_int(0, $filas - 1);
+        $c = random_int(0, $columnas - 1);
+
+        if ($tablero[$f][$c] == 0) {
+            $tablero[$f][$c] = -1;
             $numBombas--;
         }
     }
@@ -65,38 +66,16 @@ function generarNumero($tablero) {
     for ($fila = 0; $fila < $filas; $fila++) {
         for ($columna = 0; $columna < $columnas; $columna++) {
             if (esUnaBomba($tablero, $fila, $columna)) {
-                for ($i = -1; $i < 1; $i++) {
+                for ($i = -1; $i <= 1; $i++) {
                     for ($j = -1; $j < 1; $j++) {
-                        if ($i = 0 && $j = 0) {
-                            continue;
-                        } else {
+                        if ($i == 0 && $j = 0) {continue;} 
+                        else {
                             if (isset($tablero[$fila + $i][$columna + $j]) && !esUnaBomba($tablero, $fila + $i, $columna + $j)) {
                                 $tablero[$fila + $i][$columna + $j]++;
                             }
                         }
                     }
                 }
-                /*
-                if ($fila = 0 && $columna = 0) {
-                    if (!esUnaBomba($tablero, $fila, $columna + 1)) {
-                        $tablero[$fila][$columna + 1]++;
-                    }
-                    if (!esUnaBomba($tablero, $fila + 1, $columna + 1)) {
-                        $tablero[$fila + 1][$columna + 1]++;
-                    }
-                    if (!esUnaBomba($tablero, $fila +1, $columna)) {
-                        $tablero[$fila + 1][$columna]++;
-                    }
-                }
-                if ($fila = 0) {
-                    if (!esUnaBomba($tablero, $fila, $columna -1)) {
-                        $tablero[$fila][$columna -1]++;
-                    }
-                    if (!esUnaBomba($tablero, $fila, $columna + 1)) {
-                        $tablero[$fila][$columna + 1]++;
-                    }
-                }
-                */
             }
         }
     }
