@@ -124,4 +124,3 @@ class AccesoDatos {
         trigger_error('La clonación no permitida', E_USER_ERROR); 
     }
 }
-
