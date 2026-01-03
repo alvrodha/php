@@ -38,7 +38,7 @@ CREATE TABLE `Productos` (
 -- Volcado de datos para la tabla `Productos`
 --
 
-INSERT INTO `Productos` (`id`, `nombre`, `stock`, `precio`) VALUES
+INSERT INTO `productosPru` (`id`, `nombre`, `stock`, `precio`) VALUES
 (200, 'Martillo', 10, 30),
 (201, 'Maza', 3, 69),
 (302, 'Tuercas 10 mm', 20, 5),
@@ -76,7 +76,7 @@ INSERT INTO `Users` (`login`, `passwd`, `Nombre`, `accesos`, `bloqueo`) VALUES
 --
 -- Indices de la tabla `Productos`
 --
-ALTER TABLE `Productos`
+ALTER TABLE `productosPru`
   ADD PRIMARY KEY (`id`);
 
 --

@@ -12,7 +12,7 @@ class ProductoRepository {
 
     // --- CREATE (Insertar) ---
     public function crear(Producto $producto) {
-        $sql = "INSERT INTO productos (nombre, precio, stock) VALUES (:nombre, :precio, :stock)";
+        $sql = "INSERT INTO productosalm (nombre, precio, stock) VALUES (:nombre, :precio, :stock)";
         $stmt = $this->pdo->prepare($sql);
 
         // Usamos bindValue porque leemos valores de las propiedades del objeto en este momento
@@ -29,7 +29,7 @@ class ProductoRepository {
 
     // --- READ (Leer Todos) - Uso de FETCH_CLASS ---
     public function obtenerTodos() {
-        $sql = "SELECT * FROM productos";
+        $sql = "SELECT * FROM productosalm";
         $stmt = $this->pdo->query($sql);
         
         // ¡Magia! Mapeamos directamente las filas a instancias de la clase 'Producto'
@@ -45,7 +45,7 @@ class ProductoRepository {
 
     // --- READ (Leer Uno) ---
     public function obtenerPorId($id) {
-        $sql = "SELECT * FROM productos WHERE id = :id";
+        $sql = "SELECT * FROM productosalm WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
@@ -57,7 +57,7 @@ class ProductoRepository {
 
     // --- UPDATE (Actualizar) ---
     public function actualizar(Producto $producto) {
-        $sql = "UPDATE productos SET nombre = :nombre, precio = :precio, stock = :stock WHERE id = :id";
+        $sql = "UPDATE productosalm SET nombre = :nombre, precio = :precio, stock = :stock WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
 
         $stmt->bindValue(':nombre', $producto->nombre);
@@ -71,7 +71,7 @@ class ProductoRepository {
 
     // --- DELETE (Eliminar) ---
     public function eliminar($id) {
-        $sql = "DELETE FROM productos WHERE id = :id";
+        $sql = "DELETE FROM productosalm WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         
         // Aquí bindParam funcionaría igual, pero bindValue es más directo para valores simples

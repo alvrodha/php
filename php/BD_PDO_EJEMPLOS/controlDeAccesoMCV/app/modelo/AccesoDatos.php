@@ -30,7 +30,7 @@ class AccesoDatos {
     private function __construct(){
         
         try {
-            $dsn = "mysql:host=localhost;dbname=prueba";
+            $dsn = "mysql:host=localhost;dbname=almacen2";
             $this->dbh = new PDO($dsn, "root", "");
             $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->dbh->setAttribute( PDO::ATTR_EMULATE_PREPARES, FALSE );
@@ -40,10 +40,10 @@ class AccesoDatos {
         }
         // Intento crear las sentencias
         try {
-            $this->stmt_usuario     = $this->dbh->prepare("select * from Users where login=:login");
-            $this->stmt_incaccesos  = $this->dbh->prepare("update Users set accesos=accesos+1 where login=:login");
-            $this->stmt_bloquear    = $this->dbh->prepare("update Users set bloqueo=1 where login=:login");
-            $this->stmt_productos   = $this->dbh->prepare("select * from Productos");
+            $this->stmt_usuario     = $this->dbh->prepare("select * from users where login=:login");
+            $this->stmt_incaccesos  = $this->dbh->prepare("update users set accesos=accesos+1 where login=:login");
+            $this->stmt_bloquear    = $this->dbh->prepare("update users set bloqueo=1 where login=:login");
+            $this->stmt_productos   = $this->dbh->prepare("select * from productos");
 
         } catch (PDOException $e){
             echo " Error al crear la sentencia ".$e->getMessage();

@@ -110,7 +110,7 @@ class AccesoDatos {
 
     //DELETE
     public function borrarProducto(String $nombre):bool {
-        $stmt_borproducto = $this->dbh->prepare("delete from productos where nombre =:nombre");
+        $stmt_borproducto = $this->dbh->prepare("delete from Productos where nombre =:nombre");
         $stmt_borproducto->bindValue(':nombre', $nombre);
         $stmt_borproducto->execute();
         $resu = ($stmt_borproducto->rowCount () == 1);
